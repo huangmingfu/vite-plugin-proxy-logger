@@ -1,0 +1,49 @@
+{
+  "name": "vite-plugin-proxy-logger",
+  "version": "1.0.0",
+  "description": "A Vite plugin for logging proxy requests with enhanced features",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "publish": "pnpm publish",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "vite",
+    "vite-plugin",
+    "proxy",
+    "logger",
+    "debug"
+  ],
+  "author": "huangmingfu",
+  "license": "MIT",
+  "peerDependencies": {
+    "vite": ">=2.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.0",
+    "typescript": "^5.8.3",
+    "vite": "^6.2.5",
+    "chalk": "^5.4.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/huangmingfu/vite-plugin-proxy-logger.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "tag": "latest"
+  },
+  "bugs": {
+    "url": "https://github.com/huangmingfu/vite-plugin-proxy-logger/issues"
+  },
+  "homepage": "https://github.com/huangmingfu/vite-plugin-proxy-logger#readme"
+}
