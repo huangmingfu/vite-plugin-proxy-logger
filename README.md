@@ -38,19 +38,15 @@ import { proxyLogger } from 'vite-plugin-proxy-logger'
 
 export default defineConfig({
   plugins: [
-    proxyLogger({
-      // 配置选项
-      verbose: true,
-      showHeaders: false,
-      showTiming: true,
-    })
+    proxyLogger()
   ],
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000',
+        target: 'http://xxxxx.com',
         changeOrigin: true,
-      }
+      },
+      // ...
     }
   }
 })
