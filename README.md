@@ -2,6 +2,13 @@
 
 一个用于在开发环境中记录代理请求的 Vite 插件。
 
+经过 proxy 代理后，在浏览器看不到接口域名，只能看到 `http://localhost:3000/api/xxx` 这种形式，
+所以需要一个插件来记录接口的请求日志，方便开发人员调试。
+
+控制台打印出当前真正请求的接口地址：
+
+![](https://huangmingfu.github.io/drawing-bed/images/pic-go/202504071603231.png)
+
 ## 特性
 
 - 🎯 仅在开发环境中生效
@@ -56,6 +63,7 @@ export default defineConfig({
 | verbose | boolean | false | 是否显示详细日志 |
 | showHeaders | boolean | false | 是否显示请求头信息 |
 | showTiming | boolean | true | 是否显示响应时间 |
+| showProxyPath | boolean | true | 是否显示代理路径前缀 |
 | formatter | (info: ProxyLogInfo) => string | undefined | 自定义日志格式化函数 |
 | filter | (req: IncomingMessage) => boolean | () => true | 过滤特定请求的日志 |
 
