@@ -8,10 +8,11 @@
 控制台打印出当前真正请求的接口地址：
 
 ![](https://huangmingfu.github.io/drawing-bed/images/pic-go/202504071603231.png)
+![](https://huangmingfu.github.io/drawing-bed/images/pic-go/202504080920678.png)
 
 ## 特性
 
-- 🎯 仅在开发环境中生效
+- 🎯 仅在开发环境中生效，不会影响生产
 - 📝 详细的请求日志
 - ⏱️ 请求响应时间统计
 - 🎨 彩色输出
@@ -56,7 +57,7 @@ export default defineConfig({
 
 | 选项 | 类型 | 默认值 | 描述 |
 |------|------|--------|------|
-| verbose | boolean | false | 是否显示详细日志 |
+| verbose | boolean | false | 是否显示完整日志 |
 | showHeaders | boolean | false | 是否显示请求头信息 |
 | showTiming | boolean | true | 是否显示响应时间 |
 | showProxyPath | boolean | true | 是否显示代理路径前缀 |

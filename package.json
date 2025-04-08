@@ -1,6 +1,6 @@
 {
   "name": "vite-plugin-proxy-logger",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Vite plugin for logging proxy requests with enhanced features",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
@@ -15,8 +15,7 @@
   "scripts": {
     "build": "unbuild",
     "prepack": "unbuild",
-    "publish": "pnpm publish",
-    "prepublishOnly": "pnpm run build"
+    "publish": "pnpm publish"
   },
   "keywords": [
     "vite",

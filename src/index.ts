@@ -3,17 +3,34 @@ import type { IncomingMessage } from 'http';
 import chalk from 'chalk';
 
 export interface ProxyLoggerOptions {
-    /** 是否启用详细日志 */
+    /** 
+     * 是否启用详细日志
+     * @default false
+     */
     verbose?: boolean;
-    /** 是否显示请求头信息 */
+    /** 
+     * 是否显示请求头信息
+     * @default false
+     */
     showHeaders?: boolean;
-    /** 是否显示响应时间 */
+    /** 
+     * 是否显示响应时间
+     * @default true
+     */
     showTiming?: boolean;
-    /** 是否显示代理路径前缀 */
+    /** 
+     * 是否显示代理路径前缀
+     * @default true
+     */
     showProxyPath?: boolean;
-    /** 自定义日志格式化函数 */
+    /** 
+     * 自定义日志格式化函数
+     */
     formatter?: (info: ProxyLogInfo) => string;
-    /** 过滤特定请求的日志 */
+    /** 
+     * 过滤特定请求的日志
+     * @default () => true
+     */
     filter?: (req: IncomingMessage) => boolean;
 }
 
@@ -59,13 +76,16 @@ export function proxyLogger(options: ProxyLoggerOptions = {}): Plugin {
         const timing = info.duration ? chalk.gray(`${info.duration}ms`) : '';
         const proxyPath = info.proxyPath ? chalk.yellow(`[${info.proxyPath}] `) : '';
         const target = chalk.cyan(`${info.target}${info.url}`);
+        const headers = info.headers && opts.showHeaders
+            ? `\nHeaders: ${JSON.stringify(info.headers, null, 2)}`
+            : '';
 
-        return `[${timestamp}] ${method} ${proxyPath}${target} ${status} ${timing}`.trim();
+        return `[${timestamp}] ${method} ${proxyPath}${target} ${status} ${timing}${headers}`.trim();
     }
 
     return {
         name: 'vite-plugin-proxy-logger',
-        apply: 'serve',
+        apply: 'serve', // 只在开发模式下启用
         config(config) {
             if (process.env.NODE_ENV !== 'development') return;
 
@@ -81,7 +101,7 @@ export function proxyLogger(options: ProxyLoggerOptions = {}): Plugin {
                     proxyServer.on('proxyReq', (proxyReq: any, req: IncomingMessage) => {
                         if (!opts.filter(req)) return;
 
-                        const reqId = `${req.method}-${req.url}-${Date.now()}`;
+                        const reqId = `${req.method}-${req.url}}`;
                         requestTimes.set(reqId, Date.now());
 
                         if (opts.verbose) {
@@ -101,7 +121,7 @@ export function proxyLogger(options: ProxyLoggerOptions = {}): Plugin {
                     proxyServer.on('proxyRes', (proxyRes: any, req: IncomingMessage) => {
                         if (!opts.filter(req)) return;
 
-                        const reqId = `${req.method}-${req.url}-${Date.now()}`;
+                        const reqId = `${req.method}-${req.url}}`;
                         const startTime = requestTimes.get(reqId);
                         const duration = startTime ? Date.now() - startTime : undefined;
                         requestTimes.delete(reqId);
