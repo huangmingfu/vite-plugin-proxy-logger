@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-proxy-logger",
-  "version": "1.0.3",
-  "description": "A Vite plugin for logging proxy requests with enhanced features",
+  "version": "1.0.4",
+  "description": "一个用于在开发环境中记录查看代理请求的 Vite 插件。",
   "main": "dist/index.cjs",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",

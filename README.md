@@ -40,6 +40,10 @@ import { proxyLogger } from 'vite-plugin-proxy-logger'
 export default defineConfig({
   plugins: [
     proxyLogger()
+    // proxyLogger({
+    //   showHeaders: true, // 显示请求头信息
+    //   logType: 'all', // 输出请求前和请求后的日志
+    // })
   ],
   server: {
     proxy: {
@@ -57,7 +61,7 @@ export default defineConfig({
 
 | 选项 | 类型 | 默认值 | 描述 |
 |------|------|--------|------|
-| verbose | boolean | false | 是否显示完整日志 |
+| logType	|'req' \| 'res' \| 'all'|	'res'	| 'req'：仅记录请求前的日志；'res'：仅记录请求后的日志；'all'：记录请求前和请求后的日志|
 | showHeaders | boolean | false | 是否显示请求头信息 |
 | showTiming | boolean | true | 是否显示响应时间 |
 | showProxyPath | boolean | true | 是否显示代理路径前缀 |

@@ -3,11 +3,11 @@ import type { IncomingMessage } from 'http';
 import chalk from 'chalk';
 
 export interface ProxyLoggerOptions {
-    /** 
-     * 是否启用详细日志
-     * @default false
+    /**
+     * 日志类型：'req'（仅请求前）、'res'（仅请求后）、'all'（全部）
+     * @default 'res'
      */
-    verbose?: boolean;
+    logType?: 'req' | 'res' | 'all';
     /** 
      * 是否显示请求头信息
      * @default false
@@ -46,7 +46,7 @@ interface ProxyLogInfo {
 }
 
 const defaultOptions: ProxyLoggerOptions = {
-    verbose: false,
+    logType: 'res', // 默认显示请求后的日志
     showHeaders: false,
     showTiming: true,
     showProxyPath: true,
@@ -104,7 +104,7 @@ export function proxyLogger(options: ProxyLoggerOptions = {}): Plugin {
                         const reqId = `${req.method}-${req.url}}`;
                         requestTimes.set(reqId, Date.now());
 
-                        if (opts.verbose) {
+                        if ((opts.logType === 'req' || opts.logType === 'all')) {
                             const logInfo: ProxyLogInfo = {
                                 method: req.method || 'UNKNOWN',
                                 url: req.url || '',
@@ -126,18 +126,19 @@ export function proxyLogger(options: ProxyLoggerOptions = {}): Plugin {
                         const duration = startTime ? Date.now() - startTime : undefined;
                         requestTimes.delete(reqId);
 
-                        const logInfo: ProxyLogInfo = {
-                            method: req.method || 'UNKNOWN',
-                            url: req.url || '',
-                            target: String(options.target || ''),
-                            proxyPath: opts.showProxyPath ? key : undefined,
-                            statusCode: proxyRes.statusCode,
-                            duration: opts.showTiming ? duration : undefined,
-                            headers: opts.showHeaders ? proxyRes.headers : undefined,
-                            timestamp: new Date(),
-                        };
-
-                        console.log(formatLog(logInfo));
+                        if ((opts.logType === 'res' || opts.logType === 'all')) {
+                            const logInfo: ProxyLogInfo = {
+                                method: req.method || 'UNKNOWN',
+                                url: req.url || '',
+                                target: String(options.target || ''),
+                                proxyPath: opts.showProxyPath ? key : undefined,
+                                statusCode: proxyRes.statusCode,
+                                duration: opts.showTiming ? duration : undefined,
+                                headers: opts.showHeaders ? proxyRes.headers : undefined,
+                                timestamp: new Date(),
+                            };
+                            console.log(formatLog(logInfo));
+                        }
                     });
 
                     // 错误处理
