@@ -42,7 +42,7 @@ export default defineConfig({
     proxyLogger()
     // proxyLogger({
     //   showHeaders: true, // 显示请求头信息
-    //   logType: 'all', // 输出请求前和请求后的日志
+    //   logType: 'all', // 输出请求前和请求后的日志（请求后的日志是有状态码的）
     // })
   ],
   server: {
@@ -61,7 +61,7 @@ export default defineConfig({
 
 | 选项 | 类型 | 默认值 | 描述 |
 |------|------|--------|------|
-| logType	|'req' \| 'res' \| 'all'|	'res'	| 'req'：仅记录请求前的日志；'res'：仅记录请求后的日志；'all'：记录请求前和请求后的日志|
+| logType	|'req' \| 'res' \| 'all'|	'res'	| 'req'：仅记录请求前的日志；'res'：仅记录请求后的日志（有状态码）；'all'：记录请求前和请求后的日志|
 | showHeaders | boolean | false | 是否显示请求头信息 |
 | showTiming | boolean | true | 是否显示响应时间 |
 | showProxyPath | boolean | true | 是否显示代理路径前缀 |

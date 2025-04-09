@@ -1,5 +1,5 @@
-import { Plugin, ProxyOptions } from 'vite';
-import type { IncomingMessage } from 'http';
+import { HttpProxy, Plugin, ProxyOptions } from 'vite';
+import type { ClientRequest, IncomingMessage } from 'http';
 import chalk from 'chalk';
 
 export interface ProxyLoggerOptions {
@@ -96,9 +96,9 @@ export function proxyLogger(options: ProxyLoggerOptions = {}): Plugin {
                 proxy[key] = normalizeProxyOptions(value);
                 const originalConfigure = proxy[key].configure;
 
-                proxy[key].configure = (proxyServer: any, options: ProxyOptions) => {
+                proxy[key].configure = (proxyServer: HttpProxy.Server, options: ProxyOptions) => {
                     // 请求开始
-                    proxyServer.on('proxyReq', (proxyReq: any, req: IncomingMessage) => {
+                    proxyServer.on('proxyReq', (_proxyReq: ClientRequest, req: IncomingMessage) => {
                         if (!opts.filter(req)) return;
 
                         const reqId = `${req.method}-${req.url}}`;
@@ -118,7 +118,7 @@ export function proxyLogger(options: ProxyLoggerOptions = {}): Plugin {
                     });
 
                     // 请求完成
-                    proxyServer.on('proxyRes', (proxyRes: any, req: IncomingMessage) => {
+                    proxyServer.on('proxyRes', (proxyRes: IncomingMessage, req: IncomingMessage) => {
                         if (!opts.filter(req)) return;
 
                         const reqId = `${req.method}-${req.url}}`;
